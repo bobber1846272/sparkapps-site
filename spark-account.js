@@ -269,7 +269,19 @@
     },
 
     deleteAccount: function () {
-      return api.rpc('delete_my_account', {}).then(function () { clearSession(); });
+      var uid = session && session.user.id;
+      /* eerst je eigen profielfoto's weghalen via de Storage API, dan het account */
+      var clean = !uid ? Promise.resolve() : token().then(function (t) {
+        var h = { 'apikey': cfg.key, 'Authorization': 'Bearer ' + t, 'Content-Type': 'application/json' };
+        return fetch(cfg.url + '/storage/v1/object/list/avatars', { method: 'POST', headers: h, body: JSON.stringify({ prefix: uid + '/', limit: 100 }) })
+          .then(function (r) { return r.ok ? r.json() : []; })
+          .then(function (list) {
+            var paths = (list || []).filter(function (f) { return f && f.name; }).map(function (f) { return uid + '/' + f.name; });
+            if (!paths.length) return;
+            return fetch(cfg.url + '/storage/v1/object/avatars', { method: 'DELETE', headers: h, body: JSON.stringify({ prefixes: paths }) });
+          });
+      }).catch(function () {});
+      return clean.then(function () { return api.rpc('delete_my_account', {}); }).then(function () { clearSession(); });
     },
 
     /* ---------- Spark-niveau ---------- */
@@ -297,6 +309,10 @@
     rpc: function (fn, args) {
       var opts = { method: 'POST', body: args || {} };
       return session ? authed('/rest/v1/rpc/' + fn, opts) : request('/rest/v1/rpc/' + fn, opts);
+    },
+    /* Schrijven naar app-eigen tabellen, bijv. rest('mexo_data', 'POST', {...}, 'resolution=merge-duplicates,return=representation') */
+    rest: function (pathAndQuery, method, body, prefer) {
+      return authed('/rest/v1/' + pathAndQuery, { method: method || 'GET', body: body, prefer: prefer });
     },
     select: function (pathAndQuery) {
       return session ? authed('/rest/v1/' + pathAndQuery) : request('/rest/v1/' + pathAndQuery);
