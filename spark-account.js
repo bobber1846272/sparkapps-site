@@ -317,6 +317,8 @@
     select: function (pathAndQuery) {
       return session ? authed('/rest/v1/' + pathAndQuery) : request('/rest/v1/' + pathAndQuery);
     },
+    /* Geldige toegangscode (wordt op tijd vernieuwd), bijv. voor foto's uploaden */
+    token: function () { return token(); },
     storageUrl: function (bucket, path) {
       return cfg.url + '/storage/v1/object/public/' + bucket + '/' + String(path).split('/').map(encodeURIComponent).join('/');
     }
