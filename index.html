@@ -3,153 +3,155 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050B1C">
 <title>Spark Apps</title>
-<meta name="description" content="Spark Apps: ideeën die apps worden.">
+<meta name="description" content="Spark Apps: ideeën die apps worden. Android-apps gebouwd met AI, te downloaden via de Spark-appstore.">
+<meta name="theme-color" content="#050B1C">
+<meta property="og:title" content="Spark Apps">
+<meta property="og:description" content="Ideeën die apps worden. Android-apps gebouwd met AI.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z' fill='%23FFD60A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap">
-<style>
-  :root { --ground:#050B1C; --card:#0B1B3A; --line:#1C2F5E; --spark:#FFD60A; --ink:#0B1B3A; --text:#F2F5FB; --muted:#A9B6D3; --red:#FF8A8A; --mint:#7AE7C7; }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; min-height: 100%; }
-  body {
-    background: radial-gradient(60rem 40rem at 50% -10%, rgba(255,214,10,.10), transparent 60%), var(--ground);
-    color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 16px; line-height: 1.5;
-    display: grid; place-items: center; min-height: 100vh;
-    padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-  }
-  main { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 22px; }
-  .mark { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 22px; letter-spacing: -.3px; }
-  .mark svg { filter: drop-shadow(0 0 18px rgba(255,214,10,.45)); }
-  .mark b { font-weight: 700; } .mark b span { color: var(--spark); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; }
-  .kicker { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--spark); }
-  h1 { margin: 0; font-size: 30px; line-height: 1.1; letter-spacing: -1px; text-wrap: balance; }
-  p { margin: 0; color: var(--muted); }
-  label { display: flex; flex-direction: column; gap: 7px; font-size: 13px; font-weight: 700; color: #D6DDEE; }
-  input { height: 48px; border-radius: 14px; border: 1px solid var(--line); background: var(--ground); color: var(--text); font: inherit; font-size: 16px; padding: 0 14px; }
-  input:focus-visible, button:focus-visible { outline: 3px solid var(--spark); outline-offset: 2px; }
-  button { height: 50px; border: 0; border-radius: 99px; background: var(--spark); color: var(--ink); font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; }
-  button:disabled { opacity: .6; cursor: default; }
-  .err { padding: 10px 12px; border-radius: 12px; background: rgba(255,138,138,.12); color: var(--red); font-size: 14px; }
-  .ok-ico { width: 56px; height: 56px; border-radius: 50%; background: rgba(122,231,199,.14); color: var(--mint); display: grid; place-items: center; }
-  .foot { text-align: center; font-size: 13px; color: #7383AA; }
-  .foot b { color: var(--muted); font-weight: 500; }
-  [hidden] { display: none !important; }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="site.css?v=1">
 </head>
 <body>
-<main>
-  <div class="mark">
-    <svg width="34" height="34" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg>
-    <b>Spark<span>Apps</span></b>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Spark Apps, naar de start">
+      <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg>
+      <span class="lw">Spark<span>Apps</span></span>
+    </a>
+    <nav class="nav" aria-label="Hoofdmenu">
+      <a href="#apps">Apps</a>
+      <a href="#hoe">Hoe het werkt</a>
+      <a href="#spark-account">Spark Account</a>
+      <a href="#download">Downloaden</a>
+    </nav>
+    <a class="acc-btn out" id="acc-btn" href="#account">Inloggen</a>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main id="v-home">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="kicker">Spark Apps</span>
+        <h1>Ideeën die <em>apps</em> worden.</h1>
+        <p class="lead">Apps voor Android, elk begonnen als iets wat ik zelf nodig had. Gebouwd met AI, stap voor stap getest op mijn eigen telefoon.</p>
+        <div class="ctas">
+          <a class="btn" href="#download">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+            Download de Spark-appstore
+          </a>
+          <a class="btn ghost" href="#apps">Bekijk de apps</a>
+        </div>
+        <p class="note">Alleen voor Android. Niet uit de Play Store, maar rechtstreeks van Spark.</p>
+      </div>
+      <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <div class="stats" aria-label="Spark in cijfers">
+    <div class="wrap">
+      <div class="stat"><b id="st-apps">13</b><span>apps gebouwd</span></div>
+      <div class="stat"><b id="st-dl">—</b><span>downloads via de store</span></div>
+      <div class="stat"><b id="st-acc">—</b><span>Spark Accounts</span></div>
+      <div class="stat"><b>100%</b><span>gebouwd met AI</span></div>
+    </div>
   </div>
 
-  <!-- Standaard: binnenkort -->
-  <section class="card" id="v-home">
-    <span class="kicker">Ideeën die apps worden</span>
-    <h1>Hier komt de website van Spark Apps.</h1>
-    <p>Apps voor Android, gebouwd met AI. De website is nog in de maak. Download en updates gaan via de Spark-appstore.</p>
+  <section class="band" id="apps" aria-labelledby="apps-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="kicker">De apps</span><h2 id="apps-t">Wat er in de store staat</h2></div>
+        <p>Van je vrije dagen bijhouden tot Henk zo ver mogelijk gooien. Tik op een app voor meer.</p>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter op soort app"></div>
+      <div class="app-grid" id="app-grid"></div>
+    </div>
   </section>
 
-  <!-- E-mail bevestigd -->
-  <section class="card" id="v-confirmed" hidden>
-    <div class="ok-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
-    <span class="kicker">Spark Account</span>
-    <h1>Je e-mailadres is bevestigd</h1>
-    <p>Open de Spark-appstore en log in met je e-mail en wachtwoord.</p>
+  <section class="band alt" id="hoe" aria-labelledby="hoe-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="kicker">Zo bouw ik een app</span><h2 id="hoe-t">Van idee tot app</h2></div>
+        <p>Elke Spark-app begint met iets wat mist of handiger kan.</p>
+      </div>
+      <ol class="steps" id="build-steps"></ol>
+    </div>
   </section>
 
-  <!-- Nieuw wachtwoord -->
-  <section class="card" id="v-reset" hidden>
-    <span class="kicker">Spark Account</span>
-    <h1>Kies een nieuw wachtwoord</h1>
-    <form id="reset-form" novalidate style="display:flex;flex-direction:column;gap:14px">
-      <label for="pw1">Nieuw wachtwoord<input id="pw1" type="password" autocomplete="new-password" placeholder="Minstens 8 tekens"></label>
-      <label for="pw2">Nog een keer<input id="pw2" type="password" autocomplete="new-password"></label>
-      <p class="err" id="reset-err" role="alert" hidden></p>
-      <button type="submit" id="reset-go">Wachtwoord opslaan</button>
-    </form>
+  <section class="band" id="installeren" aria-labelledby="inst-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="kicker">Installeren</span><h2 id="inst-t">In drie stappen op je telefoon</h2></div>
+        <p>De eerste keer vraagt je telefoon of Spark Apps apps mag installeren. Daarna gaat het vanzelf.</p>
+      </div>
+      <ol class="steps">
+        <li><b>Download de store</b><span>Tik op de downloadknop hieronder op je Android-telefoon.</span></li>
+        <li><b>Sta het toe</b><span>Je telefoon vraagt of je browser apps mag installeren. Zet dat aan.</span></li>
+        <li><b>Kies je apps</b><span>Open Spark Apps en installeer wat je wilt. Updates komen er vanzelf in.</span></li>
+      </ol>
+    </div>
   </section>
 
-  <!-- Wachtwoord opgeslagen -->
-  <section class="card" id="v-reset-done" hidden>
-    <div class="ok-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
-    <span class="kicker">Spark Account</span>
-    <h1>Je wachtwoord is gewijzigd</h1>
-    <p>Log in de Spark-appstore in met je nieuwe wachtwoord.</p>
+  <section class="band alt" id="spark-account" aria-labelledby="sa-t">
+    <div class="wrap acc-split">
+      <div>
+        <span class="kicker">Spark Account</span>
+        <h2 id="sa-t" style="font-size:clamp(32px,4.6vw,52px);margin-top:10px">Eén account voor alle apps.</h2>
+        <p>Log één keer in en gebruik hetzelfde account in de store en straks in Tidepool, Mijn Vakanties en de Henk-games. Alles wat je doet telt mee voor je <b>Spark-niveau</b>: hoe meer je de apps gebruikt, hoe hoger je komt.</p>
+        <div class="ctas" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
+          <a class="btn" href="#account" id="sa-cta">Account maken</a>
+        </div>
+      </div>
+      <ul class="tiers" aria-label="De niveaus">
+        <li><i>Level 1</i><b>Vonkje</b></li>
+        <li><i>Level 5</i><b>Sprankel</b></li>
+        <li><i>Level 10</i><b>Spark</b></li>
+        <li><i>Level 20</i><b>Flits</b></li>
+        <li><i>Level 30</i><b>Bliksem</b></li>
+        <li><i>Level 40</i><b>Onweer</b></li>
+        <li><i>Level 50</i><b>Supernova</b></li>
+      </ul>
+    </div>
   </section>
 
-  <!-- Link verlopen of fout -->
-  <section class="card" id="v-error" hidden>
-    <span class="kicker">Spark Account</span>
-    <h1>Deze link werkt niet meer</h1>
-    <p id="error-text">De link is verlopen of al gebruikt. Vraag een nieuwe aan, of mail naar <b style="color:var(--text)">info@sparkapps.nl</b>.</p>
+  <section class="band" id="download" aria-labelledby="dl-t">
+    <div class="wrap">
+      <div class="dl">
+        <div class="big-star"><svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></div>
+        <div>
+          <h2 id="dl-t">De Spark-appstore</h2>
+          <p>Alle Spark-apps op één plek, met updates en je Spark Account. Werkt op Android 7 en nieuwer.</p>
+          <a class="btn" id="dl-btn" href="#download" aria-disabled="true">Download komt eraan</a>
+          <p class="meta" id="dl-meta">Wil je hem nu al? Mail naar info@sparkapps.nl.</p>
+        </div>
+      </div>
+    </div>
   </section>
-
-  <p class="foot">Vragen? <b>info@sparkapps.nl</b></p>
 </main>
 
-<script>
-  /* Later, met de eigen server: SUPABASE_URL wordt 'https://api.sparkapps.nl' */
-  var SUPABASE_URL = 'https://kplorhptmnfddvozpxwl.supabase.co';
-  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtwbG9yaHB0bW5mZGR2b3pweHdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMDM0ODUsImV4cCI6MjEwODY3OTQ4NX0.hJ0kbE71rK1zwH5Ow3JInqM-Y9R44XpGoX4C0Ry-VUs';
+<!-- ================= ACCOUNT ================= -->
+<main id="v-account" class="acc-page" hidden>
+  <div class="wrap" id="acc-body"></div>
+</main>
 
-  function show(id) {
-    ['v-home', 'v-confirmed', 'v-reset', 'v-reset-done', 'v-error'].forEach(function (v) {
-      document.getElementById(v).hidden = v !== id;
-    });
-  }
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Spark Apps · Gemaakt met AI</span>
+    <span>Vragen? <span class="copy">info@sparkapps.nl</span></span>
+    <a href="privacy.html">Privacyverklaring</a>
+  </div>
+</footer>
 
-  /* De links in de mails sturen gegevens mee achter het #-teken. */
-  var params = new URLSearchParams(location.hash.slice(1) || location.search.slice(1));
-  var accessToken = params.get('access_token');
-  var type = params.get('type');
-  var error = params.get('error_description') || params.get('error');
-  /* gevoelige gegevens meteen uit de adresbalk halen */
-  if (location.hash || location.search) history.replaceState(null, '', location.pathname);
+<dialog id="dlg-app" aria-labelledby="dlg-app-t"><div class="dlg" id="dlg-app-body"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  if (error) {
-    show('v-error');
-  } else if (accessToken && type === 'recovery') {
-    show('v-reset');
-  } else if (accessToken && (type === 'signup' || type === 'email_change' || type === 'magiclink' || type === 'invite')) {
-    show('v-confirmed');
-  }
-
-  var form = document.getElementById('reset-form');
-  var errEl = document.getElementById('reset-err');
-  function fail(msg) { errEl.textContent = msg; errEl.hidden = !msg; }
-  form.addEventListener('input', function () { fail(''); });
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var a = document.getElementById('pw1').value, b = document.getElementById('pw2').value;
-    if (a.length < 8) return fail('Kies een wachtwoord van minstens 8 tekens.');
-    if (a !== b) return fail('De twee wachtwoorden zijn niet hetzelfde.');
-    var go = document.getElementById('reset-go');
-    go.disabled = true; go.textContent = 'Even geduld…';
-    fetch(SUPABASE_URL + '/auth/v1/user', {
-      method: 'PUT',
-      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: a })
-    }).then(function (res) {
-      return res.json().catch(function () { return {}; }).then(function (d) {
-        if (!res.ok) throw new Error(d.msg || d.error_description || d.message || 'Fout ' + res.status);
-      });
-    }).then(function () {
-      accessToken = null;
-      show('v-reset-done');
-    }).catch(function (err) {
-      go.disabled = false; go.textContent = 'Wachtwoord opslaan';
-      var m = String(err.message || '').toLowerCase();
-      if (m.indexOf('different from the old') > -1 || m.indexOf('same') > -1) fail('Kies een ander wachtwoord dan je oude.');
-      else if (m.indexOf('expired') > -1 || m.indexOf('invalid') > -1) fail('Deze link is verlopen. Vraag een nieuwe aan.');
-      else if (m.indexOf('weak') > -1 || m.indexOf('should be') > -1) fail('Kies een sterker wachtwoord.');
-      else fail('Opslaan lukte niet. Probeer het opnieuw.');
-    });
-  });
-</script>
+<script src="apps.js?v=1"></script>
+<script src="spark-account.js?v=1"></script>
+<script src="site.js?v=1"></script>
 </body>
 </html>
