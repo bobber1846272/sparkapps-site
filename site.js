@@ -46,6 +46,7 @@ function route() {
     curView = view;
     $('v-home').hidden = view !== 'home';
     $('v-account').hidden = view !== 'account';
+    $('top').classList.toggle('solid', view === 'account');
     window.scrollTo(0, 0);
   }
   if (view === 'account') { drawAccount(); document.title = 'Spark Account · Spark Apps'; }
@@ -68,13 +69,23 @@ function icoHtml(a, size) {
   return '<span class="app-ico" style="width:' + size + 'px;height:' + size + 'px;background:' + esc(a.bg || '#12285A') + '">' + star(Math.round(size * .5)) + '</span>';
 }
 
-function drawMosaic() {
-  var list = APPS.filter(function (a) { return a.icon; }).slice(0, 11), h = '';
-  list.forEach(function (a, i) {
-    if (i === 5) h += '<div class="tile star">' + star(48, '#0B1B3A') + '</div>';
-    h += '<div class="tile"><img src="' + esc(a.icon) + '" alt=""></div>';
-  });
-  $('mosaic').innerHTML = h;
+var HERO_SHOW = ['gooihenk', 'tidepool', 'coinwise', 'daybreak', 'muse', 'gerard'];
+function drawHero() {
+  var shows = HERO_SHOW.map(function (id) { return APPS.filter(function (a) { return a.id === id; })[0]; })
+    .filter(function (a) { return a && a.shots && a.shots.length; });
+  $('screen').innerHTML = shows.map(function (a, i) { return '<img src="' + esc(a.shots[0]) + '" alt=""' + (i === 0 ? ' class="on"' : '') + '>'; }).join('');
+  var icons = APPS.filter(function (a) { return a.icon && HERO_SHOW.indexOf(a.id) < 0; }).slice(0, 4);
+  $('floats').innerHTML = icons.map(function (a, i) { return '<div class="float f' + (i + 1) + '"><img src="' + esc(a.icon) + '" alt=""></div>'; }).join('');
+  if (!shows.length) return;
+  $('cap').textContent = shows[0].name;
+  var idx = 0, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || shows.length < 2) return;
+  setInterval(function () {
+    if (document.hidden || curView !== 'home') return;
+    var imgs = $('screen').children; imgs[idx].classList.remove('on');
+    idx = (idx + 1) % imgs.length; imgs[idx].classList.add('on');
+    $('cap').textContent = shows[idx].name;
+  }, 3200);
 }
 
 function drawApps() {
@@ -82,12 +93,24 @@ function drawApps() {
   APPS.forEach(function (a) { if (a.cat && cats.indexOf(a.cat) < 0) cats.push(a.cat); });
   cats.sort(function (x, y) { var i = CAT_ORDER.indexOf(x), j = CAT_ORDER.indexOf(y); return (i < 0 ? 99 : i) - (j < 0 ? 99 : j); });
   $('chips').innerHTML = ['', ].concat(cats).map(function (c) {
-    return '<button class="chip" aria-pressed="' + (catPick === c) + '" data-cat="' + esc(c) + '">' + (c ? esc(c) : 'Alle apps') + '</button>';
+    return '<button class="chip" aria-pressed="' + (catPick === c) + '" data-cat="' + esc(c) + '">' + (c ? esc(c) : 'Alle') + '</button>';
   }).join('');
   var list = APPS.filter(function (a) { return !catPick || a.cat === catPick; });
+  var feats = catPick ? [] : ['gooihenk', 'tidepool'];
+  if (!catPick) list = feats.map(function (id) { return list.filter(function (a) { return a.id === id; })[0]; }).filter(Boolean)
+    .concat(list.filter(function (a) { return feats.indexOf(a.id) < 0; }));
+  var more = '<span class="more">Bekijk de app <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>';
   $('app-grid').innerHTML = list.map(function (a) {
-    return '<button class="app-card" data-app="' + esc(a.id) + '">' + icoHtml(a, 64) +
-      '<span class="t"><span class="tag">' + esc(a.cat || 'App') + '</span><b>' + esc(a.name) + '</b><span class="s">' + esc(a.tagline) + '</span></span></button>';
+    var c = /^#[0-9a-f]{6}$/i.test(a.bg || '') ? a.bg : '#12285A';
+    if (feats.indexOf(a.id) > -1 && a.shots && a.shots.length) {
+      return '<button class="app-card feat" style="--c:' + c + '" data-app="' + esc(a.id) + '"><span class="txt"><span class="feat-tag">Uitgelicht</span>' +
+        '<span class="head">' + icoHtml(a, 60) + '<span><span class="cat">' + esc(a.cat || 'App') + '</span><b>' + esc(a.name) + '</b></span></span>' +
+        '<span class="s">' + esc(a.tagline) + '</span>' + more + '</span>' +
+        '<span class="shot"><img src="' + esc(a.shots[0]) + '" alt="" loading="lazy"></span></button>';
+    }
+    return '<button class="app-card" style="--c:' + c + '" data-app="' + esc(a.id) + '"><span class="head">' + icoHtml(a, 60) +
+      '<span><span class="cat">' + esc(a.cat || 'App') + '</span><b>' + esc(a.name) + '</b></span></span>' +
+      '<span class="s">' + esc(a.tagline) + '</span>' + more + '</button>';
   }).join('');
   $('st-apps').textContent = APPS.length;
 }
@@ -121,7 +144,7 @@ $('dlg-app').addEventListener('click', function (e) { if (e.target === this) thi
 
 function drawBuildSteps() {
   var steps = window.SPARK_STEPS || [];
-  $('build-steps').innerHTML = steps.map(function (s) { return '<li><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('');
+  $('build-steps').innerHTML = steps.map(function (s) { return '<li><span class="num"></span><b>' + esc(s[0]) + '</b><span>' + esc(s[1]) + '</span></li>'; }).join('');
 }
 
 /* Gegevens van de server: nieuwe apps, de store-download en de cijfers */
@@ -306,7 +329,7 @@ function profileHtml(p) {
   var photo = /^https:\/\//.test(p.avatar_url || '');
   var h = '<div class="panel"><div class="me">' + SparkAccount.avatarHtml(p, 88) +
       '<div style="min-width:0"><h1>' + esc(p.display_name) + '</h1><div class="handle">@' + esc(p.username) + '</div>' +
-      '<div class="pills"><span class="pill">Level ' + (+p.level || 1) + ' · ' + esc(SparkAccount.levelName(p.level)) + '</span>' + (p.is_admin ? '<span class="pill y">Beheerder</span>' : '') + '</div></div></div>' +
+      '<div class="pills"><span class="p">Level ' + (+p.level || 1) + ' · ' + esc(SparkAccount.levelName(p.level)) + '</span>' + (p.is_admin ? '<span class="p y">Beheerder</span>' : '') + '</div></div></div>' +
       '<button class="linkbtn" id="av-toggle">' + (acc.pickAvatar ? 'Klaar met avatar kiezen' : 'Avatar of foto wijzigen') + '</button>';
   if (acc.pickAvatar) {
     h += '<div class="av-grid" role="group" aria-label="Kies een avatar">';
@@ -376,10 +399,14 @@ function bindProfile() {
   });
 }
 
+function onScroll() { $('top').classList.toggle('scrolled', window.scrollY > 24); }
+window.addEventListener('scroll', onScroll, { passive: true });
+
 /* =============================================================
    5. Start
    ============================================================= */
-drawMosaic(); drawApps(); drawBuildSteps(); drawAccBtn();
+drawHero(); drawApps(); drawBuildSteps(); drawAccBtn();
 route();
+onScroll();
 loadServer();
 if (SparkAccount.isSignedIn() && !linkState) SparkAccount.profile().then(drawAccBtn).catch(function (e) { if (e.code === 'blocked') toast(e.message); drawAccBtn(); });

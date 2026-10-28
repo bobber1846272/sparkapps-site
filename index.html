@@ -11,123 +11,147 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z' fill='%23FFD60A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="site.css?v=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="site.css?v=2">
 </head>
 <body>
 
-<header class="top">
+<header class="top" id="top">
   <div class="wrap">
-    <a class="logo" href="#" aria-label="Spark Apps, naar de start">
-      <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg>
-      <span class="lw">Spark<span>Apps</span></span>
-    </a>
-    <nav class="nav" aria-label="Hoofdmenu">
-      <a href="#apps">Apps</a>
-      <a href="#hoe">Hoe het werkt</a>
-      <a href="#spark-account">Spark Account</a>
-      <a href="#download">Downloaden</a>
-    </nav>
-    <a class="acc-btn out" id="acc-btn" href="#account">Inloggen</a>
+    <div class="bar">
+      <a class="logo" href="#" aria-label="Spark Apps, naar de start">
+        <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg>
+        <span class="lw">Spark<span>Apps</span></span>
+      </a>
+      <nav class="nav" aria-label="Hoofdmenu">
+        <a href="#apps">Apps</a>
+        <a href="#werkwijze">Werkwijze</a>
+        <a href="#spark-account">Spark Account</a>
+        <a href="#download">Downloaden</a>
+      </nav>
+      <a class="acc-btn out" id="acc-btn" href="#account">Inloggen</a>
+    </div>
   </div>
 </header>
 
 <!-- ================= HOME ================= -->
 <main id="v-home">
   <section class="hero">
+    <div class="gridbg" aria-hidden="true"></div>
     <div class="wrap">
       <div>
-        <span class="kicker">Spark Apps</span>
-        <h1>Ideeën die <em>apps</em> worden.</h1>
-        <p class="lead">Apps voor Android, elk begonnen als iets wat ik zelf nodig had. Gebouwd met AI, stap voor stap getest op mijn eigen telefoon.</p>
+        <a class="pill" href="#spark-account"><b>Nieuw</b> Spark Account met levels en badges</a>
+        <h1>Ideeën die<br><span class="y">apps<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg></span> worden.</h1>
+        <p class="lead">Spark bouwt Android-apps die precies doen wat je nodig hebt. Van je vrije dagen bijhouden tot vakantie-uitgaven verdelen. Gebouwd met AI, getest in het echte leven.</p>
         <div class="ctas">
           <a class="btn" href="#download">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
             Download de Spark-appstore
           </a>
-          <a class="btn ghost" href="#apps">Bekijk de apps</a>
+          <a class="btn ghost" href="#apps">Bekijk de apps <svg class="arr" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-        <p class="note">Alleen voor Android. Niet uit de Play Store, maar rechtstreeks van Spark.</p>
+        <ul class="trust">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Voor Android 7 en nieuwer</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Geen Play Store nodig</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Updates komen vanzelf</li>
+        </ul>
       </div>
-      <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+      <div class="stage" id="stage" aria-hidden="true">
+        <svg class="burst" viewBox="0 0 200 200"><defs><radialGradient id="g" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFD60A" stop-opacity=".35"/><stop offset="1" stop-color="#FFD60A" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="100" fill="url(#g)"/><g stroke="#FFD60A" stroke-opacity=".18" stroke-width=".6"><circle cx="100" cy="100" r="62" fill="none"/><circle cx="100" cy="100" r="84" fill="none" stroke-dasharray="2 4"/></g></svg>
+        <div class="phone"><div class="notch"></div><div class="screen" id="screen"></div></div>
+        <div id="floats"></div>
+        <div class="caption"><i></i><span id="cap">Spark Apps</span></div>
+      </div>
     </div>
   </section>
 
   <div class="stats" aria-label="Spark in cijfers">
     <div class="wrap">
-      <div class="stat"><b id="st-apps">13</b><span>apps gebouwd</span></div>
-      <div class="stat"><b id="st-dl">—</b><span>downloads via de store</span></div>
-      <div class="stat"><b id="st-acc">—</b><span>Spark Accounts</span></div>
-      <div class="stat"><b>100%</b><span>gebouwd met AI</span></div>
+      <div class="grid">
+        <div class="stat"><span class="label">Apps gebouwd</span><b id="st-apps">13</b></div>
+        <div class="stat"><span class="label">Downloads</span><b id="st-dl">—</b></div>
+        <div class="stat"><span class="label">Spark Accounts</span><b id="st-acc">—</b></div>
+        <div class="stat"><span class="label">Gebouwd met AI</span><b>100<em>%</em></b></div>
+      </div>
     </div>
   </div>
 
   <section class="band" id="apps" aria-labelledby="apps-t">
     <div class="wrap">
       <div class="sec-head">
-        <div><span class="kicker">De apps</span><h2 id="apps-t">Wat er in de store staat</h2></div>
-        <p>Van je vrije dagen bijhouden tot Henk zo ver mogelijk gooien. Tik op een app voor meer.</p>
+        <div><span class="label">De apps</span><h2 id="apps-t">Gemaakt om echt te gebruiken.</h2></div>
+        <p>Elke app lost één ding goed op, zonder overbodige knoppen. Klik op een app voor schermen en functies.</p>
       </div>
-      <div class="chips" id="chips" role="group" aria-label="Filter op soort app"></div>
+      <div class="tabs" id="chips" role="group" aria-label="Filter op soort app"></div>
       <div class="app-grid" id="app-grid"></div>
     </div>
   </section>
 
-  <section class="band alt" id="hoe" aria-labelledby="hoe-t">
+  <div class="wrap"><div class="divider"></div></div>
+
+  <section class="band" id="werkwijze" aria-labelledby="hoe-t">
     <div class="wrap">
       <div class="sec-head">
-        <div><span class="kicker">Zo bouw ik een app</span><h2 id="hoe-t">Van idee tot app</h2></div>
-        <p>Elke Spark-app begint met iets wat mist of handiger kan.</p>
+        <div><span class="label">Werkwijze</span><h2 id="hoe-t">Van idee tot app op je telefoon.</h2></div>
+        <p>Elke Spark-app begint met iets wat mist of handiger kan. Daarna gaat het in vier stappen.</p>
       </div>
-      <ol class="steps" id="build-steps"></ol>
+      <ol class="flow" id="build-steps"></ol>
     </div>
   </section>
 
-  <section class="band" id="installeren" aria-labelledby="inst-t">
-    <div class="wrap">
-      <div class="sec-head">
-        <div><span class="kicker">Installeren</span><h2 id="inst-t">In drie stappen op je telefoon</h2></div>
-        <p>De eerste keer vraagt je telefoon of Spark Apps apps mag installeren. Daarna gaat het vanzelf.</p>
-      </div>
-      <ol class="steps">
-        <li><b>Download de store</b><span>Tik op de downloadknop hieronder op je Android-telefoon.</span></li>
-        <li><b>Sta het toe</b><span>Je telefoon vraagt of je browser apps mag installeren. Zet dat aan.</span></li>
-        <li><b>Kies je apps</b><span>Open Spark Apps en installeer wat je wilt. Updates komen er vanzelf in.</span></li>
-      </ol>
-    </div>
-  </section>
+  <div class="wrap"><div class="divider"></div></div>
 
-  <section class="band alt" id="spark-account" aria-labelledby="sa-t">
+  <section class="band" id="spark-account" aria-labelledby="sa-t">
     <div class="wrap acc-split">
       <div>
-        <span class="kicker">Spark Account</span>
-        <h2 id="sa-t" style="font-size:clamp(32px,4.6vw,52px);margin-top:10px">Eén account voor alle apps.</h2>
-        <p>Log één keer in en gebruik hetzelfde account in de store en straks in Tidepool, Mijn Vakanties en de Henk-games. Alles wat je doet telt mee voor je <b>Spark-niveau</b>: hoe meer je de apps gebruikt, hoe hoger je komt.</p>
-        <div class="ctas" style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
-          <a class="btn" href="#account" id="sa-cta">Account maken</a>
+        <span class="label">Spark Account</span>
+        <h2 id="sa-t">Eén account. Alle apps. Eén niveau.</h2>
+        <p>Log één keer in en gebruik hetzelfde account in de store, op deze website en straks in Tidepool, Mijn Vakanties en de Henk-games. Alles wat je doet telt mee voor je Spark-niveau.</p>
+        <ul class="tiers" aria-label="De niveaus">
+          <li><i>1</i>Vonkje</li><li><i>5</i>Sprankel</li><li><i>10</i>Spark</li><li><i>20</i>Flits</li><li><i>30</i>Bliksem</li><li><i>40</i>Onweer</li><li><i>50</i>Supernova</li>
+        </ul>
+        <a class="btn" href="#account" id="sa-cta">Account maken</a>
+      </div>
+      <div class="demo" aria-label="Voorbeeld van een Spark-profiel">
+        <span class="tag">Voorbeeld</span>
+        <div class="who">
+          <span class="spa-av" style="width:56px;height:56px;background:#7AE7C7"><svg viewBox="0 0 100 100" width="28" height="28" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#08392C"/></svg></span>
+          <div><b>Jouw naam</b><span>@jouwnaam</span></div>
+        </div>
+        <div class="lv">
+          <div class="lvl-num"><b>12</b><span>level</span></div>
+          <div><span class="kicker">Spark-niveau</span><div style="font-family:var(--display);font-weight:700;font-size:24px">Spark</div><div style="font-family:var(--mono);font-size:13px;color:var(--muted)">3.540 XP · nog 360 tot level 13</div></div>
+        </div>
+        <div class="bar"><i style="width:72%"></i></div>
+        <div class="badge-row">
+          <div><span class="ic"><svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></span>Welkom</div>
+          <div><span class="ic"><svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></span>Ontdekker</div>
+          <div><span class="ic"><svg viewBox="0 0 100 100" width="18" height="18" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></span>Echte Spark</div>
+          <div class="off"><span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>Bliksem</div>
         </div>
       </div>
-      <ul class="tiers" aria-label="De niveaus">
-        <li><i>Level 1</i><b>Vonkje</b></li>
-        <li><i>Level 5</i><b>Sprankel</b></li>
-        <li><i>Level 10</i><b>Spark</b></li>
-        <li><i>Level 20</i><b>Flits</b></li>
-        <li><i>Level 30</i><b>Bliksem</b></li>
-        <li><i>Level 40</i><b>Onweer</b></li>
-        <li><i>Level 50</i><b>Supernova</b></li>
-      </ul>
     </div>
   </section>
 
-  <section class="band" id="download" aria-labelledby="dl-t">
+  <section class="band" id="download" aria-labelledby="dl-t" style="padding-top:40px">
     <div class="wrap">
       <div class="dl">
-        <div class="big-star"><svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></div>
         <div>
-          <h2 id="dl-t">De Spark-appstore</h2>
-          <p>Alle Spark-apps op één plek, met updates en je Spark Account. Werkt op Android 7 en nieuwer.</p>
-          <a class="btn" id="dl-btn" href="#download" aria-disabled="true">Download komt eraan</a>
-          <p class="meta" id="dl-meta">Wil je hem nu al? Mail naar info@sparkapps.nl.</p>
+          <span class="label">Downloaden</span>
+          <h2 id="dl-t">In drie stappen op je telefoon.</h2>
+          <ol>
+            <li><div><b>Download de store</b><span>Tik op de knop op je Android-telefoon.</span></div></li>
+            <li><div><b>Sta het toe</b><span>Je telefoon vraagt of je browser apps mag installeren. Zet dat aan.</span></div></li>
+            <li><div><b>Kies je apps</b><span>Open Spark Apps en installeer wat je wilt. Updates komen er vanzelf in.</span></div></li>
+          </ol>
+        </div>
+        <div class="store-card">
+          <div class="row1">
+            <div class="sico"><svg width="40" height="40" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#0B1B3A"/></svg></div>
+            <div><b>Spark Apps</b><span class="sub">Alle Spark-apps, updates en je account</span></div>
+          </div>
+          <a class="btn full" id="dl-btn" href="#download" aria-disabled="true">Download komt eraan</a>
+          <span class="meta" id="dl-meta">Wil je hem nu al? Mail info@sparkapps.nl</span>
         </div>
       </div>
     </div>
@@ -136,22 +160,35 @@
 
 <!-- ================= ACCOUNT ================= -->
 <main id="v-account" class="acc-page" hidden>
+  <div class="gridbg" aria-hidden="true"></div>
   <div class="wrap" id="acc-body"></div>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="year">2026</span> Spark Apps · Gemaakt met AI</span>
-    <span>Vragen? <span class="copy">info@sparkapps.nl</span></span>
-    <a href="privacy.html">Privacyverklaring</a>
+    <div class="cols">
+      <div>
+        <a class="logo" href="#"><svg width="22" height="22" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 4 C54 36 64 46 96 50 C64 54 54 64 50 96 C46 64 36 54 4 50 C36 46 46 36 50 4 Z" fill="#FFD60A"/></svg><span class="lw">Spark<span>Apps</span></span></a>
+        <p class="blurb">Ideeën die apps worden. Android-apps, gebouwd met AI en getest in het echte leven.</p>
+      </div>
+      <div>
+        <h3>Spark</h3>
+        <ul><li><a href="#apps">Apps</a></li><li><a href="#werkwijze">Werkwijze</a></li><li><a href="#download">Downloaden</a></li></ul>
+      </div>
+      <div>
+        <h3>Account</h3>
+        <ul><li><a href="#account">Inloggen</a></li><li><a href="privacy.html">Privacyverklaring</a></li><li><span class="copy">info@sparkapps.nl</span></li></ul>
+      </div>
+    </div>
+    <div class="base"><span>© <span id="year">2026</span> Spark Apps</span><span>Gemaakt in Nederland · Gebouwd met AI</span></div>
   </div>
 </footer>
 
 <dialog id="dlg-app" aria-labelledby="dlg-app-t"><div class="dlg" id="dlg-app-body"></div></dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="apps.js?v=1"></script>
-<script src="spark-account.js?v=1"></script>
-<script src="site.js?v=1"></script>
+<script src="apps.js?v=2"></script>
+<script src="spark-account.js?v=2"></script>
+<script src="site.js?v=2"></script>
 </body>
 </html>
