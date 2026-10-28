@@ -29,12 +29,13 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 96px; background: var(--bg); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { caret-color: transparent; margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; letter-spacing: -.03em; line-height: 1.04; text-wrap: balance; }
 p { margin: 0; }
 [hidden] { display: none !important; }
+input, textarea, select, [contenteditable="true"] { caret-color: var(--spark); }
 :focus-visible { outline: 2px solid var(--spark); outline-offset: 3px; border-radius: 8px; }
 ::selection { background: var(--spark); color: var(--on-spark); }
 .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
