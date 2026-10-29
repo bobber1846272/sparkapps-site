@@ -213,6 +213,7 @@ function drawAccount() {
   }
   if (linkState === 'recovery') { el.innerHTML = recoveryHtml(); bindRecovery(); return; }
   var p = SparkAccount.cached();
+  el.classList.toggle('dash', !!(SparkAccount.isSignedIn() && p));
   if (SparkAccount.isSignedIn() && p) { el.innerHTML = (linkState === 'confirmed' ? '<div class="okmsg" role="status">' + check() + ' Je e-mailadres is bevestigd. Welkom bij Spark!</div>' : '') + profileHtml(p); bindProfile(); return; }
   if (linkState === 'confirmed') {
     el.innerHTML = '<div class="panel"><span class="kicker">Spark Account</span><h1>Je e-mailadres is bevestigd</h1><p>Log in in de Spark-appstore of hieronder op de website.</p><button class="btn" onclick="linkState=null;drawAccount()">Inloggen</button></div>';
@@ -336,41 +337,58 @@ function bindRecovery() {
 function profileHtml(p) {
   var cur = 0, m = /^preset:(\d+)$/.exec(p.avatar_url || ''); if (m) cur = +m[1];
   var photo = /^https:\/\//.test(p.avatar_url || '');
-  var h = '<div class="panel"><div class="me">' + SparkAccount.avatarHtml(p, 88) +
+  var pr = progressFor(p);
+  var since = new Date(p.created_at), sinceTxt = isNaN(since) ? '—' : since.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+  /* links: wie je bent en je instellingen */
+  var h = '<aside class="panel dash-side" aria-label="Je profiel"><div class="me">' + SparkAccount.avatarHtml(p, 76) +
       '<div style="min-width:0"><h1>' + esc(p.display_name) + '</h1><div class="handle">@' + esc(p.username) + '</div>' +
-      '<div class="pills"><span class="p">Level ' + (+p.level || 1) + ' · ' + esc(SparkAccount.levelName(p.level)) + '</span>' + (p.is_admin ? '<span class="p y">Beheerder</span>' : '') + '</div></div></div>' +
+      '<div class="pills"><span class="p">Level ' + pr.level + ' · ' + esc(SparkAccount.levelName(pr.level)) + '</span>' + (p.is_admin ? '<span class="p y">Beheerder</span>' : '') + '</div></div></div>' +
       '<button class="linkbtn" id="av-toggle">' + (acc.pickAvatar ? 'Klaar met avatar kiezen' : 'Avatar of foto wijzigen') + '</button>';
   if (acc.pickAvatar) {
     h += '<div class="av-grid" role="group" aria-label="Kies een avatar">';
-    for (var i = 1; i <= SparkAccount.presetCount; i++) h += '<button class="av-pick" aria-pressed="' + (i === cur) + '" data-av="' + i + '" aria-label="Avatar ' + i + '">' + SparkAccount.avatarHtml(p, 52, i) + '</button>';
-    h += '<button class="av-pick" aria-pressed="' + (!cur && !photo) + '" data-av="0" aria-label="Eerste letter van je naam">' + SparkAccount.avatarHtml({ display_name: p.display_name }, 52) + '</button></div>' +
+    for (var i = 1; i <= SparkAccount.presetCount; i++) h += '<button class="av-pick" aria-pressed="' + (i === cur) + '" data-av="' + i + '" aria-label="Avatar ' + i + '">' + SparkAccount.avatarHtml(p, 44, i) + '</button>';
+    h += '<button class="av-pick" aria-pressed="' + (!cur && !photo) + '" data-av="0" aria-label="Eerste letter van je naam">' + SparkAccount.avatarHtml({ display_name: p.display_name }, 44) + '</button></div>' +
       '<label class="btn ghost sm" style="align-self:flex-start;cursor:pointer">Eigen foto uploaden<input type="file" id="av-file" accept="image/jpeg,image/png,image/webp" class="sr-only"></label>' +
       '<p class="small">Een foto van maximaal 2 MB. Die is zichtbaar voor andere Spark-gebruikers.</p>';
   }
-  h += '</div>' + levelHtml(p) + '<div class="panel" id="acc-req"><div class="row" style="justify-content:space-between"><h2>Je berichten</h2><a class="linkbtn" href="#aanvragen">Alles bekijken</a></div><p class="small">Even laden…</p></div>';
-  h += '<div class="panel"><h2>Je naam</h2><form class="row" id="name-form" novalidate><input class="inp" id="f-name" maxlength="40" value="' + esc(p.display_name) + '" aria-label="Je naam"><button class="btn sm" id="f-go" type="submit">Opslaan</button></form><p class="err" id="f-err" role="alert" hidden></p></div>';
-  h += '<div class="panel info"><div><span>E-mail</span><b>' + esc(p.email || '') + '</b></div><div><span>Lid sinds</span><b>' + esc(new Date(p.created_at).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })) + '</b></div></div>';
-  h += '<div class="panel"><div class="row"><button class="btn ghost" id="sign-out">Uitloggen</button>' +
-       (p.is_admin ? '' : '<button class="btn danger" id="del-acc">' + (acc.delArm ? 'Zeker weten? Klik nog een keer' : 'Account verwijderen') + '</button>') + '</div>' +
-       (p.is_admin ? '' : '<p class="small">Verwijderen haalt je account, profiel en Spark-niveau definitief weg.</p>') + '</div>';
+  h += '<div class="side-sep"></div>' +
+    '<form class="field" id="name-form" novalidate><span>Je naam</span><div class="row"><input class="inp" id="f-name" maxlength="40" value="' + esc(p.display_name) + '" aria-label="Je naam"><button class="btn sm" id="f-go" type="submit">Opslaan</button></div><p class="err" id="f-err" role="alert" hidden></p></form>' +
+    '<div class="info"><div><span>E-mail</span><b>' + esc(p.email || '') + '</b></div><div><span>Lid sinds</span><b>' + esc(sinceTxt) + '</b></div></div>' +
+    '<div class="side-sep"></div>' +
+    '<div class="row"><button class="btn ghost sm" id="sign-out">Uitloggen</button>' +
+      (p.is_admin ? '' : '<button class="btn danger sm" id="del-acc">' + (acc.delArm ? 'Zeker weten? Klik nog een keer' : 'Account verwijderen') + '</button>') + '</div>' +
+    (p.is_admin ? '' : '<p class="small">Verwijderen haalt je account, profiel en Spark-niveau definitief weg.</p>') +
+  '</aside>';
+  /* rechts: niveau bovenaan, daaronder badges en berichten naast elkaar */
+  h += '<div class="dash-main">' + levelHtml(pr) + '<div class="dash-row">' + badgesHtml(pr) +
+    '<section class="panel" id="acc-req"><div class="row" style="justify-content:space-between"><h2>Je berichten</h2><a class="linkbtn" href="#aanvragen">Alles bekijken</a></div><p class="small">Even laden…</p></section>' +
+  '</div></div>';
   return h;
 }
 
-function levelHtml(p) {
-  var pr = acc.progress;
-  if (!pr) {
-    SparkAccount.progress().then(function (r) { if (r && typeof r.xp === 'number') { acc.progress = r; if (curView === 'account' && SparkAccount.isSignedIn()) drawAccount(); } });
-    var L = +p.level || 1; pr = { xp: +p.xp || 0, level: L, level_start_xp: 25 * (L - 1) * L, next_level_xp: 25 * L * (L + 1), badges: null };
-  }
+function progressFor(p) {
+  if (acc.progress) return acc.progress;
+  SparkAccount.progress().then(function (r) { if (r && typeof r.xp === 'number') { acc.progress = r; if (curView === 'account' && SparkAccount.isSignedIn()) drawAccount(); } });
+  var L = +p.level || 1;
+  return { xp: +p.xp || 0, level: L, level_start_xp: 25 * (L - 1) * L, next_level_xp: 25 * L * (L + 1), badges: null };
+}
+
+function levelHtml(pr) {
   var pct = pr.next_level_xp ? Math.max(3, Math.min(100, Math.round((pr.xp - pr.level_start_xp) / (pr.next_level_xp - pr.level_start_xp) * 100))) : 100;
-  var h = '<div class="panel"><div class="lvl-top"><div class="lvl-num"><b>' + pr.level + '</b><span>level</span></div><div><span class="kicker">Spark-niveau</span><br><b class="name">' + esc(SparkAccount.levelName(pr.level)) + '</b><div class="sub">' + fmt(pr.xp) + ' XP' + (pr.next_level_xp ? ' · nog ' + fmt(pr.next_level_xp - pr.xp) + ' tot level ' + (pr.level + 1) : ' · hoogste level') + '</div></div></div>' +
-    '<div class="bar" role="progressbar" aria-label="Voortgang naar het volgende level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div>';
-  if (pr.badges) {
-    var n = pr.badges.filter(function (b) { return b.earned_at; }).length;
-    h += '<div class="row" style="justify-content:space-between"><h2>Badges</h2><span class="small">' + n + ' van ' + pr.badges.length + '</span></div><div class="bdgs">' +
-      pr.badges.map(function (b) { return '<div class="bdg' + (b.earned_at ? ' on' : '') + '"><div class="ic">' + (b.earned_at ? star(22, '#0B1B3A') : lock()) + '</div><b>' + esc(b.name) + '</b><span>' + esc(b.description) + '</span></div>'; }).join('') + '</div>';
-  }
-  return h + '<p class="small">Je verdient punten door de Spark-apps te gebruiken. Alle apps tellen mee voor hetzelfde niveau.</p></div>';
+  return '<section class="panel lvl-panel"><div class="lvl-top"><div class="lvl-num"><b>' + pr.level + '</b><span>level</span></div>' +
+      '<div class="lvl-txt"><span class="kicker">Spark-niveau</span><b class="name">' + esc(SparkAccount.levelName(pr.level)) + '</b>' +
+      '<div class="sub">' + fmt(pr.xp) + ' XP' + (pr.next_level_xp ? ' · nog ' + fmt(pr.next_level_xp - pr.xp) + ' tot level ' + (pr.level + 1) : ' · hoogste level') + '</div></div>' +
+      '<p class="small lvl-note">Je verdient punten door de Spark-apps te gebruiken. Alle apps tellen mee voor hetzelfde niveau.</p></div>' +
+    '<div class="bar" role="progressbar" aria-label="Voortgang naar het volgende level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + pct + '%"></i></div></section>';
+}
+
+function badgesHtml(pr) {
+  if (!pr.badges) return '<section class="panel"><h2>Badges</h2><p class="small">Je badges worden geladen…</p></section>';
+  var n = pr.badges.filter(function (b) { return b.earned_at; }).length;
+  var list = pr.badges.slice().sort(function (a, b) { return (b.earned_at ? 1 : 0) - (a.earned_at ? 1 : 0); });
+  return '<section class="panel"><div class="row" style="justify-content:space-between"><h2>Badges</h2><span class="small">' + n + ' van ' + pr.badges.length + '</span></div><div class="bdgs">' +
+    list.map(function (b) { return '<div class="bdg' + (b.earned_at ? ' on' : '') + '" title="' + esc(b.description) + '"><div class="ic">' + (b.earned_at ? star(20, '#0B1B3A') : lock()) + '</div><b>' + esc(b.name) + '</b><span>' + esc(b.description) + '</span></div>'; }).join('') +
+  '</div></section>';
 }
 
 function bindProfile() {
@@ -619,7 +637,7 @@ function fillAccReq() {
   var top = '<div class="row" style="justify-content:space-between"><h2>Je berichten</h2><a class="linkbtn" href="#aanvragen">' + (Array.isArray(req.mine) && req.mine.length ? 'Alles bekijken' : 'Iets insturen') + '</a></div>';
   if (req.mine === null) { el.innerHTML = top + '<p class="small">Even laden…</p>'; loadMyRequests(); return; }
   if (!Array.isArray(req.mine) || !req.mine.length) { el.innerHTML = top + '<p class="small">Heb je een idee voor een app of loop je ergens tegenaan? <a href="#aanvragen">Laat het weten</a>, dan zie je hier het antwoord.</p>'; return; }
-  el.innerHTML = top + '<ul class="msgs">' + req.mine.slice(0, 2).map(reqItem).join('') + '</ul>';
+  el.innerHTML = top + '<ul class="msgs">' + req.mine.slice(0, 4).map(reqItem).join('') + '</ul>';
   [].forEach.call(el.querySelectorAll('[data-del]'), function (b) { b.remove(); });
 }
 
