@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="site.css?v=3">
+<link rel="stylesheet" href="site.css?v=4">
 </head>
 <body>
 
@@ -25,8 +25,8 @@
       </a>
       <nav class="nav" aria-label="Hoofdmenu">
         <a href="#apps">Apps</a>
-        <a href="#werkwijze">Werkwijze</a>
-        <a href="#spark-account">Spark Account</a>
+        <a href="#nieuw">Wat is nieuw</a>
+        <a href="#aanvragen">App aanvragen</a>
         <a href="#download">Downloaden</a>
       </nav>
       <a class="acc-btn out" id="acc-btn" href="#account">Inloggen</a>
@@ -84,6 +84,32 @@
       </div>
       <div class="tabs" id="chips" role="group" aria-label="Filter op soort app"></div>
       <div class="app-grid" id="app-grid"></div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <section class="band" id="meedoen" aria-labelledby="md-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><span class="label">Meedoen</span><h2 id="md-t">Jouw idee, de volgende app.</h2></div>
+        <p>Veel Spark-apps begonnen als iets wat iemand miste. Vraag een app aan, meld een fout of kijk wat er de laatste tijd veranderd is.</p>
+      </div>
+      <div class="md-grid">
+        <div class="md-card ask">
+          <span class="kicker">App aanvragen</span>
+          <h3>Mis je een app? Vertel wat hij moet doen.</h3>
+          <p>Je ziet op je Spark Account wat er met je idee gebeurt: bekeken, mee bezig of klaar.</p>
+          <div class="row">
+            <a class="btn" href="#aanvragen?soort=app">Een app aanvragen</a>
+            <a class="btn ghost" href="#aanvragen?soort=fout">Een fout melden</a>
+          </div>
+        </div>
+        <div class="md-card">
+          <div class="row" style="justify-content:space-between"><span class="kicker">Wat is er nieuw</span><a class="linkbtn" href="#nieuw">Alle updates</a></div>
+          <div id="news-teaser"><p class="small">Even laden…</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -158,6 +184,18 @@
   </section>
 </main>
 
+<!-- ================= WAT IS ER NIEUW ================= -->
+<main id="v-nieuw" class="acc-page sub-page" hidden>
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="wrap" id="news-body"></div>
+</main>
+
+<!-- ================= AANVRAGEN ================= -->
+<main id="v-aanvragen" class="acc-page sub-page" hidden>
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="wrap" id="req-body"></div>
+</main>
+
 <!-- ================= ACCOUNT ================= -->
 <main id="v-account" class="acc-page" hidden>
   <div class="gridbg" aria-hidden="true"></div>
@@ -173,7 +211,7 @@
       </div>
       <div>
         <h3>Spark</h3>
-        <ul><li><a href="#apps">Apps</a></li><li><a href="#werkwijze">Werkwijze</a></li><li><a href="#download">Downloaden</a></li></ul>
+        <ul><li><a href="#apps">Apps</a></li><li><a href="#nieuw">Wat is er nieuw</a></li><li><a href="#aanvragen">App aanvragen of fout melden</a></li><li><a href="#werkwijze">Werkwijze</a></li><li><a href="#download">Downloaden</a></li></ul>
       </div>
       <div>
         <h3>Account</h3>
@@ -189,6 +227,6 @@
 
 <script src="apps.js?v=2"></script>
 <script src="spark-account.js?v=2"></script>
-<script src="site.js?v=2"></script>
+<script src="site.js?v=3"></script>
 </body>
 </html>
